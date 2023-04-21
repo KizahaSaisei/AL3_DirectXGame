@@ -12,6 +12,7 @@ GameScene::~GameScene()
 	delete spriteBG_; // BG 
 	delete modelStage_; // ステージ
 	delete modelPlayer_; // プレイヤー 
+	delete modelBeam_; // ビーム
 }
 
 //　初期化
@@ -52,12 +53,19 @@ void GameScene::Initialize() {
 	modelPlayer_ = Model::Create();
 	worldTransformPlayer_.scale_ = {0.5f, 0.5f, 0.5f};
 	worldTransformPlayer_.Initialize();
+
+	// 　ビーム
+	textureHandleBeam_ = TextureManager::Load("beam.png");
+	modelBeam_ = Model::Create();
+	worldTransformBeam_.scale_ = {0.15f, 0.15f, 0.15f};
+	worldTransformBeam_.Initialize();
 }
 
 //　更新
 void GameScene::Update() 
 {
 	PlayerUpdate(); // プレイヤー更新
+	BeamUpdate(); // ビーム更新
 }
 
 //　描画
@@ -96,6 +104,9 @@ void GameScene::Draw() {
 
 	//　プレイヤー
 	modelPlayer_->Draw(worldTransformPlayer_, viewProjection_, textureHandlePlayer_);
+
+	// 　ビーム
+	modelBeam_->Draw(worldTransformBeam_, viewProjection_, textureHandleBeam_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
@@ -141,4 +152,49 @@ void GameScene::PlayerUpdate() {
 	    worldTransformPlayer_.translation_);
 	//　変換行列を定数バッファに転送
 	worldTransformPlayer_.TransferMatrix();
+}
+// -------------------------------------
+// ビーム
+// -------------------------------------
+
+// 　ビーム更新
+void GameScene::BeamUpdate() {
+	// ビーム発生
+	BeamBorn();
+
+	//　移動
+	BeamMove();
+
+	// 　変換行列を更新
+	worldTransformBeam_.matWorld_ = MakeAffineMatrix(
+	    worldTransformBeam_.scale_, worldTransformBeam_.rotation_,
+	    worldTransformBeam_.translation_);
+	// 　変換行列を定数バッファに転送
+	worldTransformBeam_.TransferMatrix();
+
+	//　回転
+	worldTransformBeam_.rotation_.x += 0.1f;
+}
+//　ビーム移動
+void GameScene::BeamMove() {
+	if (beamFlag_ == 1) {
+	worldTransformBeam_.translation_.z += 0.1f;
+	}
+	if (worldTransformBeam_.translation_.z >= 40.0f) {
+	beamFlag_ = 0;
+	}
+	if (beamFlag_ == 0) {
+	worldTransformBeam_.translation_.x = worldTransformPlayer_.translation_.x;
+	worldTransformBeam_.translation_.y = worldTransformPlayer_.translation_.y;
+	worldTransformBeam_.translation_.z = worldTransformPlayer_.translation_.z;
+	}
+}
+
+//　ビーム発生（発射）
+void GameScene::BeamBorn() {
+	if (input_->PushKey(DIK_SPACE)) {
+		if (beamFlag_ == 0) {
+			beamFlag_ = 1;
+		}
+	}
 }
