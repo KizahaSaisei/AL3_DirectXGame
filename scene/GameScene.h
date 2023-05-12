@@ -72,7 +72,7 @@ private: // メンバ変数
 	// 　ステージ
 	uint32_t textureHandleStage_ = 0;
 	Model* modelStage_ = nullptr;
-	WorldTransform worldTransformStage_;
+	WorldTransform worldTransformStage_[20];
 	// 　プレイヤー
 	uint32_t textureHandlePlayer_ = 0;
 	Model* modelPlayer_ = nullptr;
@@ -143,4 +143,22 @@ private: // メンバ変数
 	uint32_t soundDataHandleEnemyHitSE_ = 0;
 	uint32_t soundDataHandlePlayerHitSE_ = 0;
 	uint32_t voiceHandleBGM_ = 0;
+
+	void StageUpdate();
+
+	float enemyJumpSpeed_[10] = {};
+
+	void EnemyJump();
+
+	// スコア数値（スプライト）
+	uint32_t textureHandleNumber_ = 0;
+	Sprite* spriteNumber_[5] = {};
+	void DrawScore();
+	uint32_t textureHandleScore_ = 0;
+	Sprite* spriteScore_ = nullptr;
+
+	uint32_t textureHandleLife_ = 0;
+	Sprite* spriteLife_[3] = {};
+
+	int playerTimer_ = 0;
 };
