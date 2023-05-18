@@ -12,7 +12,8 @@ GameScene::~GameScene() {
 
 	// 各クラスの削除
 	delete stage_; // ステージ
-	}
+	delete player_; // プレイヤー
+}
 
 // 　初期化
 void GameScene::Initialize() {
@@ -22,18 +23,25 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	// ビュープロジェクションの初期化
+	viewProjection_.translation_.y = 1;
+	viewProjection_.translation_.z = -6;
 	viewProjection_.Initialize();
 
 	// 各クラスの生成
 	stage_ = new Stage(); // ステージ
+	player_ = new Player(); // プレイヤー
 
 	// 各クラスの初期化
 	stage_->Intialize(viewProjection_); // ステージ
-	}
+	player_->Intialize(viewProjection_); // プレイヤー
+}
 
 // 　更新
 void GameScene::Update() {
-	}
+	// 各クラスの更新
+	stage_->Update(); // ステージ
+	player_->Update(); // プレイヤー
+}
 
 // 　描画
 void GameScene::Draw() {
@@ -47,6 +55,10 @@ void GameScene::Draw() {
 
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
+	
+	// 背景の描画
+	stage_->Draw2DFar();
+
 	/// </summary>
 
 	// スプライト描画後処理
@@ -61,6 +73,14 @@ void GameScene::Draw() {
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
+	
+	// ステージの描画
+	stage_->Draw3D();
+
+	// プレイヤーの描画
+	player_->Draw3D(); 
+	
+
 	/// </summary>
 
 	// 3Dオブジェクト描画後処理
