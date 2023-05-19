@@ -11,6 +11,7 @@
 #include "WorldTransform.h"
 #include "Stage.h"
 #include "Player.h"
+#include "Beam.h"
 
 /// <summary>
 /// ゲームシーン
@@ -55,6 +56,7 @@ private: // メンバ変数
 	// 各クラス
 	Stage* stage_ = nullptr; // ステージ
 	Player* player_ = nullptr; // プレイヤー
+	Beam* beam_ = nullptr; // ビーム
 
 	// ビュープロジェクション（共通）
 	ViewProjection viewProjection_;

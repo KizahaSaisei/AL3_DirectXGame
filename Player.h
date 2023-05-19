@@ -26,6 +26,13 @@ public:
 	// 3D表示
 	void Draw3D();
 
+	// x座標の獲得
+	float GetX() { return worldTransformPlayer_.translation_.x; }
+	// y座標の獲得
+	float GetY() { return worldTransformPlayer_.translation_.y; }
+	// z座標の獲得
+	float GetZ() { return worldTransformPlayer_.translation_.z; }
+
 private:
 	// ビュープロジェクション（共通）
 	ViewProjection viewProjection_;
@@ -37,4 +44,5 @@ private:
 
 	// インプットクラス
 	Input*input_ = nullptr;
+
 };
