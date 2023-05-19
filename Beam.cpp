@@ -16,6 +16,12 @@ void Beam::Intialize(ViewProjection viewProjection, Player* player) {
 
 	// インプットクラス
 	input_ = Input::GetInstance();
+
+	// 　ビーム
+	textureHandleBeam_ = TextureManager::Load("beam.png");
+	modelBeam_ = Model::Create();
+	worldTransformBeam_.scale_ = {0.5f / 3, 0.5f / 3, 0.5f / 3};
+	worldTransformBeam_.Initialize();
 }
 
 // 更新
@@ -25,12 +31,6 @@ void Beam::Update() {
 
 	// 発生（発射）
 	Born();
-
-	// 　ビーム
-	textureHandleBeam_ = TextureManager::Load("beam.png");
-	modelBeam_ = Model::Create();
-	worldTransformBeam_.scale_ = {0.5f/3, 0.5f/3, 0.5f/3};
-	worldTransformBeam_.Initialize();
 
 	// 　変換行列を更新
 	worldTransformBeam_.matWorld_ = MakeAffineMatrix(
