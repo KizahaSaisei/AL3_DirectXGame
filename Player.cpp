@@ -32,7 +32,9 @@ void Player::Update() {
 	    worldTransformPlayer_.translation_);
 	//  変換行列を定数バッファに転送
 	worldTransformPlayer_.TransferMatrix();
-
+}
+// 移動
+void Player::Move() {
 	//  移動
 	//  右へ移動
 	if (input_->PushKey(DIK_RIGHT)) {
@@ -45,7 +47,6 @@ void Player::Update() {
 	}
 	worldTransformPlayer_.translation_.x = max(worldTransformPlayer_.translation_.x, -4.0f);
 }
-
 // 3D表示
 void Player::Draw3D() {
 	//  プレイヤー

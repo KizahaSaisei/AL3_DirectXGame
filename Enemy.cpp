@@ -26,9 +26,6 @@ void Enemy::Update() {
 	// 敵発生
 	Born();
 
-	// 敵移動
-	Move();
-
 	// 　変換行列を更新
 	worldTransformEnemy_.matWorld_ = MakeAffineMatrix(
 	    worldTransformEnemy_.scale_, worldTransformEnemy_.rotation_,
@@ -36,8 +33,7 @@ void Enemy::Update() {
 	// 　変換行列を定数バッファに転送
 	worldTransformEnemy_.TransferMatrix();
 
-	// 　回転
-	worldTransformEnemy_.rotation_.x -= 0.1f;
+	
 }
 
 // 3D表示
@@ -57,6 +53,8 @@ void Enemy::Move() {
 	if (worldTransformEnemy_.translation_.z <= -2.0f) {
 		aliveFlag_ = 0;
 	}
+	// 　回転
+	worldTransformEnemy_.rotation_.x -= 0.1f;
 }
 
 // 発生（発射）

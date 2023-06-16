@@ -26,9 +26,6 @@ void Beam::Intialize(ViewProjection viewProjection, Player* player) {
 
 // 更新
 void Beam::Update() {
-	// 移動
-	Move();
-
 	// 発生（発射）
 	Born();
 
@@ -39,8 +36,7 @@ void Beam::Update() {
 	// 　変換行列を定数バッファに転送
 	worldTransformBeam_.TransferMatrix();
 
-	// 　回転
-	worldTransformBeam_.rotation_.x += 0.1f;
+	
 }
 
 // 3D表示
@@ -60,6 +56,8 @@ void Beam::Move() {
 	if (worldTransformBeam_.translation_.z >= 40.0f) {
 		aliveFlag_ = 0;
 	}
+	// 　回転
+	worldTransformBeam_.rotation_.x += 0.1f;
 }
 
 // 発生（発射）
@@ -72,7 +70,6 @@ void Beam::Born() {
 	}
 	if (aliveFlag_ == 0) {
 		worldTransformBeam_.translation_.x = player_->GetX();
-		worldTransformBeam_.translation_.y = player_->GetY();
 		worldTransformBeam_.translation_.z = player_->GetZ();
 	}
 }

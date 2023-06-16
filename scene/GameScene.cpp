@@ -9,17 +9,14 @@ GameScene::GameScene() {}
 
 // 　デストラクタ
 GameScene::~GameScene() {
-
-	// 各クラスの削除
-	delete stage_; // ステージ
-	delete player_; // プレイヤー
-	delete beam_;   // ビーム
-	delete enemy_;   // 敵
+	delete gamePlay_;
+	delete title_;
+	delete gameOver_;
 }
 
 // 　初期化
-void GameScene::Initialize() {
-
+void GameScene::Initialize() 
+{
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
@@ -29,26 +26,51 @@ void GameScene::Initialize() {
 	viewProjection_.translation_.z = -6;
 	viewProjection_.Initialize();
 
-	// 各クラスの生成
-	stage_ = new Stage(); // ステージ
-	player_ = new Player(); // プレイヤー
-	beam_ = new Beam();     // ビーム
-	enemy_ = new Enemy();     // ビーム
+	gamePlay_ = new GamePlay(); // ゲームプレイ
+	title_ = new Title();       // タイトル
+	gameOver_ = new GameOver(); // ゲームオーバー
 
-	// 各クラスの初期化
-	stage_->Intialize(viewProjection_); // ステージ
-	player_->Intialize(viewProjection_); // プレイヤー
-	beam_->Intialize(viewProjection_, player_); // ビーム
-	enemy_->Intialize(viewProjection_); // 敵
+	gamePlay_->Intialize(viewProjection_); // ゲームプレイ初期化
+	title_->Intialize(); // タイトル初期化
+	gameOver_->Intialize(viewProjection_); // ゲームオーバー初期化
 }
 
 // 　更新
 void GameScene::Update() {
-	// 各クラスの更新
-	stage_->Update(); // ステージ
-	player_->Update(); // プレイヤー
-	beam_->Update();   // ビーム
-	enemy_->Update();   // 敵
+	// 現在のモードを記録
+	int oldSceneMode = sceneMode_;
+
+	// 各シーン更新
+	switch (sceneMode_) {
+	case 1:
+		sceneMode_ = title_->Update(); // タイトル更新
+		break;
+	case 0:
+		sceneMode_ = gamePlay_->Update(); // ゲームプレイ更新
+	case 2:
+		sceneMode_ = gameOver_->Update();
+		break;
+	}
+
+	if (oldSceneMode != 0) {
+		switch (sceneMode_) {
+		case 0:
+			gamePlay_->Start(); // ゲームプレイ
+			break;
+		}
+	}
+	if (oldSceneMode != 2) {
+		switch (sceneMode_) {
+		case 2:
+			break;
+		}
+	}
+	if (oldSceneMode != 1) {
+		switch (sceneMode_) {
+		case 1:
+			break;
+		}
+	}
 }
 
 // 　描画
@@ -64,8 +86,18 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに背景スプライトの描画処理を追加できる
 	
-	// 背景の描画
-	stage_->Draw2DFar();
+	// 各シーン2D背景描画
+	switch (sceneMode_) 
+	{
+	case 1:
+		break;
+	case 0:
+		gamePlay_->Draw2DFar(); // ゲームプレイ表示2D背景
+		break;
+	case 2:
+		gameOver_->Draw2DFar();
+		break;
+	}
 
 	/// </summary>
 
@@ -82,18 +114,18 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	
-	// ステージの描画
-	stage_->Draw3D();
-
-	// プレイヤーの描画
-	player_->Draw3D(); 
-
-	// ビームの描画
-	beam_->Draw3D(); 
-
-	// 敵の描画
-	enemy_->Draw3D(); 
-
+	// 各シーン3D描画
+	switch (sceneMode_) {
+	case 1:
+		break;
+	case 0:
+		gamePlay_->Draw3D(); // ゲームプレイ3D表示
+		break;
+	case 2:
+		gameOver_->Draw3D();
+		break;
+	}
+	
 	/// </summary>
 
 	// 3Dオブジェクト描画後処理
@@ -106,7 +138,21 @@ void GameScene::Draw() {
 
 	/// <summary>
 	/// ここに前景スプライトの描画処理を追加できる
-	/// </summary>
+	
+	// 各シーン2D前景描画
+	switch (sceneMode_) {
+	case 1:
+		title_->Draw2DNear();
+		break;
+	case 0:
+		gamePlay_->Draw2DNear(); // ゲームプレイ表示2D近景
+		break;
+	case 2:
+		gameOver_->Draw2DNear();
+		break;
+	}
+
+	/// </summary>[^
 
 	// スプライト描画後処理
 	Sprite::PostDraw();

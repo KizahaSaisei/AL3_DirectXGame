@@ -9,10 +9,9 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-#include "Stage.h"
-#include "Player.h"
-#include "Beam.h"
-#include "Enemy.h"
+#include "GamePlay.h"
+#include "Title.h"
+#include "GameOver.h"
 
 /// <summary>
 /// ゲームシーン
@@ -54,12 +53,16 @@ private: // メンバ変数
 	/// ゲームシーン用
 	/// </summary>
 
-	// 各クラス
-	Stage* stage_ = nullptr; // ステージ
-	Player* player_ = nullptr; // プレイヤー
-	Beam* beam_ = nullptr;     // ビーム
-	Enemy* enemy_ = nullptr;     // ビーム
-
 	// ビュープロジェクション（共通）
 	ViewProjection viewProjection_;
+
+	// GamePlay
+	GamePlay* gamePlay_ = nullptr;
+	// Title
+	Title* title_ = nullptr;
+	// GameOver
+	GameOver* gameOver_ = nullptr;
+
+	int sceneMode_ = 1; // シーンモード（0：タイトル　1：ゲームプレイ　2：ゲームオーバー）
+
 };

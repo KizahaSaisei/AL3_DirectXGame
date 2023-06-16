@@ -31,6 +31,17 @@ public:
 	// 発生（発射）
 	void Born();
 
+	// ライフの獲得
+	int GetFlag() { return aliveFlag_; }
+
+	// 衝突判定
+	void Hit() { aliveFlag_ = 0; }
+
+	// x座標の獲得
+	float GetX() { return worldTransformEnemy_.translation_.x; }
+	// z座標の獲得
+	float GetZ() { return worldTransformEnemy_.translation_.z; }
+
 private:
 	// ビュープロジェクション（共通）
 	ViewProjection viewProjection_;

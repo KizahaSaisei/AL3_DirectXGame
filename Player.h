@@ -8,6 +8,7 @@
 #include "WorldTransform.h"
 #include "Input.h"
 
+
 class Player
 {
 public:
@@ -23,15 +24,23 @@ public:
 	// 更新
 	void Update();
 
+	// 移動
+	void Move();
+
 	// 3D表示
 	void Draw3D();
 
 	// x座標の獲得
 	float GetX() { return worldTransformPlayer_.translation_.x; }
-	// y座標の獲得
-	float GetY() { return worldTransformPlayer_.translation_.y; }
 	// z座標の獲得
 	float GetZ() { return worldTransformPlayer_.translation_.z; }
+
+	// ライフの獲得
+	int GetFlag() { return aliveFlag_; }
+
+	// 衝突判定
+	void Hit() { aliveFlag_ -= 1; }
+	void End() { aliveFlag_ = 0; }
 
 private:
 	// ビュープロジェクション（共通）
@@ -44,5 +53,8 @@ private:
 
 	// インプットクラス
 	Input*input_ = nullptr;
+
+	// 存在フラグ
+	int aliveFlag_ = 3;
 
 };
