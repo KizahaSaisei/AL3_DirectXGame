@@ -42,9 +42,10 @@ public:
 	// ゲームプレイ表示2D近景
 	void Draw2DNear();
 
+	// 射撃
+	void Shot();
+
 	int Next() { return playerLife_; }
-	void End() { playerLife_ = 0; }
-	int Score() { return gameScore_; }
 
 private:
 	// ビュープロジェクション（共通）
@@ -53,8 +54,8 @@ private:
 	// 各クラス
 	Stage* stage_ = nullptr;   // ステージ
 	Player* player_ = nullptr; // プレイヤー
-	Beam* beam_ = nullptr;     // ビーム
-	Enemy* enemy_ = nullptr;   // ビーム
+	Beam* beamTable_[10] = {}; // ビーム
+	Enemy* enemyTable_[10] = {}; // 敵
 
 	// 衝突判定（ビームと敵）
 	void CollisionBeamEnemy();
@@ -68,4 +69,10 @@ private:
 
 	int playerLife_ = 3; // プレイヤーライフ
 	int timer_ = 0;
+	float x = 0.0f;
+	float z = 0.0f;
+	// インプットクラス
+	Input* input_ = nullptr;
+
+	int shotTimer_[10] = {0};
 };

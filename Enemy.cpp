@@ -32,8 +32,6 @@ void Enemy::Update() {
 	    worldTransformEnemy_.translation_);
 	// 　変換行列を定数バッファに転送
 	worldTransformEnemy_.TransferMatrix();
-
-	
 }
 
 // 3D表示
@@ -43,30 +41,47 @@ void Enemy::Draw3D() {
 		modelEnemy_->Draw(worldTransformEnemy_, viewProjection_, textureHandleEnemy_);
 	}
 }
-
+  
 // 移動
 void Enemy::Move() {
 	// 敵の移動
 	if (aliveFlag_ == 1) {
 		worldTransformEnemy_.translation_.z -= 0.1f;
+		worldTransformEnemy_.translation_.x += xSpeed_;
 	}
 	if (worldTransformEnemy_.translation_.z <= -2.0f) {
 		aliveFlag_ = 0;
 	}
 	// 　回転
 	worldTransformEnemy_.rotation_.x -= 0.1f;
+	if (worldTransformEnemy_.translation_.x >= 4.0f ||
+	    worldTransformEnemy_.translation_.x <= -4.0f) {
+		xSpeed_ = -xSpeed_;
+	}
+	worldTransformEnemy_.translation_.x = min(worldTransformEnemy_.translation_.x, 4.0f);
+	worldTransformEnemy_.translation_.x = max(worldTransformEnemy_.translation_.x, -4.0f);
 }
 
 // 発生（発射）
 void Enemy::Born() {
-	if (aliveFlag_ == 0) {
-		if (rand() % 10 != 0) {
-			aliveFlag_ = 1;
-			// 乱数でX座標の指定
-			int x = rand() % 80;          // 80は4の10倍の2倍
-			float x2 = (float)x / 10 - 4; // 10で割り、4を引く
-			worldTransformEnemy_.translation_.x = x2;
-			worldTransformEnemy_.translation_.z = 40.0f;
+	// 乱数で発生
+	if (rand() % 10 == 0) {
+		if (aliveFlag_ == 0) {
+			if (rand() % 10 != 0) {
+				aliveFlag_ = 1;
+				// 敵スピード
+				if (rand() % 2 == 0) {
+					xSpeed_ = 0.1f;
+				} else {
+					xSpeed_ = -0.1f;
+				}
+				// 乱数でX座標の指定
+				int x = rand() % 80;          // 80は4の10倍の2倍
+				float x2 = (float)x / 10 - 4; // 10で割り、4を引く
+				worldTransformEnemy_.translation_.x = x2;
+				worldTransformEnemy_.translation_.z = 40.0f;
+			}
 		}
 	}
+	
 }

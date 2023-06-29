@@ -38,7 +38,7 @@ public:
 	float GetY() { return worldTransformBeam_.translation_.y; }
 	// z座標の獲得
 	float GetZ() { return worldTransformBeam_.translation_.z; }
-
+	
 	// ライフの獲得
 	int GetFlag() { return aliveFlag_; }
 

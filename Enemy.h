@@ -42,6 +42,8 @@ public:
 	// z座標の獲得
 	float GetZ() { return worldTransformEnemy_.translation_.z; }
 
+	void Z() { worldTransformEnemy_.translation_.z = 40.0f; }
+
 private:
 	// ビュープロジェクション（共通）
 	ViewProjection viewProjection_;
@@ -53,4 +55,7 @@ private:
 
 	// 存在フラグ
 	int aliveFlag_ = 0;
+
+	// 横方向スピード
+	float xSpeed_ = 0;
 };

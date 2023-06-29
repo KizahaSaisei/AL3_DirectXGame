@@ -47,6 +47,11 @@ void Player::Move() {
 	}
 	worldTransformPlayer_.translation_.x = max(worldTransformPlayer_.translation_.x, -4.0f);
 }
+
+void Player::Born() {
+		worldTransformPlayer_.translation_.x = 0.0f;
+}
+
 // 3D表示
 void Player::Draw3D() {
 	//  プレイヤー

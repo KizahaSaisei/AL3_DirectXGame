@@ -47,6 +47,7 @@ void GameScene::Update() {
 		break;
 	case 0:
 		sceneMode_ = gamePlay_->Update(); // ゲームプレイ更新
+		
 	case 2:
 		sceneMode_ = gameOver_->Update();
 		break;

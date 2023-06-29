@@ -29,6 +29,8 @@ public:
 
 	// 3D表示
 	void Draw3D();
+	
+	void Born();
 
 	// x座標の獲得
 	float GetX() { return worldTransformPlayer_.translation_.x; }
@@ -41,6 +43,7 @@ public:
 	// 衝突判定
 	void Hit() { aliveFlag_ -= 1; }
 	void End() { aliveFlag_ = 0; }
+	void Start() { aliveFlag_ = 3; }
 
 private:
 	// ビュープロジェクション（共通）

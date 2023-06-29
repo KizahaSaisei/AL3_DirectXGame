@@ -26,8 +26,9 @@ void Beam::Intialize(ViewProjection viewProjection, Player* player) {
 
 // 更新
 void Beam::Update() {
-	// 発生（発射）
-	Born();
+	
+
+	
 
 	// 　変換行列を更新
 	worldTransformBeam_.matWorld_ = MakeAffineMatrix(

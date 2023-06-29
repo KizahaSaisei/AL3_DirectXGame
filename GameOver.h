@@ -44,12 +44,22 @@ private:
 	// ビュープロジェクション（共通）
 	ViewProjection viewProjection_;
 
+	// BG（スプライト）
+	uint32_t textureHandleBG_ = 0;
+	Sprite* spriteBG_ = nullptr;
+
+	// ステージ
+	uint32_t textureHandleStage_ = 0;
+	Model* modelStage_ = nullptr;
+	WorldTransform worldTransformStage_;
+	
+
 	//// 各クラス
 	//Stage* stage_ = nullptr;   // ステージ
-	//Player* player_ = nullptr; // プレイヤー
+	Player* player_ = nullptr; // プレイヤー
 	//Beam* beam_ = nullptr;     // ビーム
 	//Enemy* enemy_ = nullptr;   // ビーム
-	GamePlay* gamePlay_ = nullptr;   // ビーム
+	GamePlay* gamePlay_ = nullptr;   
 
 	//// デバッグテキスト
 	//DebugText* debugText_ = nullptr;
