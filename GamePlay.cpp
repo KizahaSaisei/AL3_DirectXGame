@@ -53,6 +53,7 @@ void GamePlay::Start() {
 	{
 	enemyTable_[i]->Hit();
 	beamTable_[i]->Hit();
+	beamTable_[i]->Hit();
 	enemyTable_[i]->Z();
 	beamTable_[i]->Born();
 	enemyTable_[i]->Born();
